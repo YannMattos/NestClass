@@ -22,4 +22,28 @@ export class UserRepository {
 
         return verificacaoEmail !== undefined
     }
+
+    async atualiza(id: string, dadosAtualizados: Partial<UserEntity>){
+
+        const verificaUsuario = this.usuarios.find(
+            usuarioSalvo => usuarioSalvo.id === id
+        )
+
+        if (!verificaUsuario){
+            throw new Error("Usuario não existe")
+        }
+
+        Object.entries(dadosAtualizados).forEach(([
+            chave, 
+            valor
+        ]) => {
+            if(chave === 'id'){
+                return
+            }
+            verificaUsuario[chave] = valor
+
+            return verificaUsuario
+
+        })
+    }
 }
