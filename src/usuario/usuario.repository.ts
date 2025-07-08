@@ -1,49 +1,58 @@
-import { Injectable } from "@nestjs/common";
-import { UserEntity } from "./usuario.entity";
-
+import { Injectable } from '@nestjs/common';
+import { UserEntity } from './usuario.entity';
 
 @Injectable()
 export class UserRepository {
-    private usuarios: UserEntity [] = [];
+  private usuarios: UserEntity[] = [];
 
-    async salvar(usuario: UserEntity) {
-        this.usuarios.push(usuario);
+  private buscaPorId(id: string) {
+    const verificaUsuario = this.usuarios.find(
+      (usuarioSalvo) => usuarioSalvo.id === id,
+    );
+
+    if (!verificaUsuario) {
+      throw new Error('Usuario não existe');
     }
 
-    async listagem() {
-        return this.usuarios;
-    }
+    return verificaUsuario
+  }
 
-    async verificarEmail(email: string){
-        
-        const verificacaoEmail = this.usuarios.find(
-            usuario => usuario.email === email
-        )
+  async salvar(usuario: UserEntity) {
+    this.usuarios.push(usuario);
+  }
 
-        return verificacaoEmail !== undefined
-    }
+  async listagem() {
+    return this.usuarios;
+  }
 
-    async atualiza(id: string, dadosAtualizados: Partial<UserEntity>){
+  async verificarEmail(email: string) {
+    const verificacaoEmail = this.usuarios.find(
+      (usuario) => usuario.email === email,
+    );
 
-        const verificaUsuario = this.usuarios.find(
-            usuarioSalvo => usuarioSalvo.id === id
-        )
+    return verificacaoEmail !== undefined;
+  }
 
-        if (!verificaUsuario){
-            throw new Error("Usuario não existe")
-        }
+  async atualiza(id: string, dadosAtualizados: Partial<UserEntity>) {
+    const usuario = this.buscaPorId(id)
 
-        Object.entries(dadosAtualizados).forEach(([
-            chave, 
-            valor
-        ]) => {
-            if(chave === 'id'){
-                return
-            }
-            verificaUsuario[chave] = valor
+    Object.entries(dadosAtualizados).forEach(([chave, valor]) => {
+      if (chave === 'id') {
+        return;
+      }
+      usuario[chave] = valor;
 
-            return verificaUsuario
+      return usuario;
+    });
+  }
 
-        })
-    }
+  async deletar(id: string) {
+    const usuario = this.buscaPorId(id);
+
+    this.usuarios = this.usuarios.filter(
+        usuarioSalvo => usuarioSalvo.id !== id
+    )
+
+    return usuario
+  }
 }
