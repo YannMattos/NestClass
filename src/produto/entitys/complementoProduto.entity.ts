@@ -1,8 +1,8 @@
-import { Column, Entity } from "typeorm";
+import { Column, Entity, PrimaryColumn } from "typeorm";
 
 @Entity('product_details')
 export class ProductDetails{
-    @Column({name: "title_detail", length: 100, nullable: false})
+    @PrimaryColumn({name: "title_detail", length: 100, nullable: false})
     title: string
 
     @Column({name: "product_description", length: 100, nullable: false})
