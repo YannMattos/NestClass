@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { ProductEntity } from "./produto.entity";
+import { ProductEntity } from "./entitys/produto.entity";
 
 
 @Injectable()

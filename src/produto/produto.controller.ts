@@ -1,7 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
 import { CreateProduct } from "./dto/criarProduto.dto";
-import { ProductEntity } from "./produto.entity";
-import {v4 as uuid} from "uuid"
+import { ProductEntity } from "./entitys/produto.entity";
 import { ProductRepository } from "./produto.repository";
 import { listProducts } from "./dto/listaProduto.dto";
 import { UpdateProduct } from "./dto/atualizaProduto.dto";
@@ -19,10 +18,10 @@ export class ProductsController {
 
         const newProduct = new ProductEntity();
         newProduct.name = productsData.name;
-        newProduct.description = productsData.description;
+        newProduct.details = productsData.details;
         newProduct.quantity = productsData.quantity;
         newProduct.price = productsData.price;
-        newProduct.id = uuid();
+        newProduct.image = productsData.image;
 
         this.productRepository.create(newProduct)
         return{
@@ -38,7 +37,6 @@ export class ProductsController {
         const productsList = products.map(productItem => {
             const productInsp = new listProducts();
             productInsp.name = productItem.name;
-            productInsp.id = productItem.id;
             return productInsp;
         });
 

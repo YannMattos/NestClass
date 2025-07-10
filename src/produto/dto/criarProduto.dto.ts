@@ -1,23 +1,42 @@
-import { IsNotEmpty, IsOptional, MinLength, IsNumber, IsString } from "class-validator"
-
+import {
+  IsNotEmpty,
+  IsOptional,
+  MinLength,
+  IsNumber,
+  IsString,
+  ValidateNested,
+} from 'class-validator';
+import { ProductImage } from './imagemProduto.dto';
+import { ProductDetails } from './complementoProduto.dto';
+import { Type } from 'class-transformer';
 
 export class CreateProduct {
+  id: number;
 
-    @IsNotEmpty()
-    @IsString()
-    @MinLength(3)
-    name: string
+  @IsNotEmpty()
+  user_id: string
 
-    @IsOptional()
-    @IsString()
-    description: string
+  @IsNotEmpty()
+  @IsString()
+  @MinLength(3)
+  name: string;
 
-    @IsNotEmpty()
-    @IsNumber()
-    quantity: number
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => ProductDetails)
+  details: ProductDetails;
 
-    @IsString()
-    @IsNotEmpty()
-    @MinLength(2)
-    price: string
+  @Type(() => Number)
+  @IsNumber()
+  quantity: number;
+
+  @IsString()
+  @IsNotEmpty()
+  @MinLength(2)
+  price: string;
+
+  @IsNotEmpty()
+  @ValidateNested()
+  @Type(() => ProductImage)
+  image: ProductImage;
 }
