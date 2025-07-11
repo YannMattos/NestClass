@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm';
-import { ProductDetails } from '../dto/complementoProduto.dto';
-import { ProductImage } from '../dto/imagemProduto.dto';
+import { ProductDetails } from '../dto/product_complement.dto';
+import { ProductImage } from '../dto/product_image.dto';
 
 @Entity({ name: 'product' })
 export class ProductEntity {

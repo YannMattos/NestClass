@@ -1,7 +1,7 @@
 import { IsEmail, IsString, MinLength, Matches } from 'class-validator';
 import { EmailValidation } from '../validacao/user_validation.validator';
 
-export class CriarUsuario {
+export class CreateUser {
   @IsString()
   @MinLength(3)
   nome: string;

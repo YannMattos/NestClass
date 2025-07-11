@@ -6,8 +6,8 @@ import {
   IsString,
   ValidateNested,
 } from 'class-validator';
-import { ProductImage } from './imagemProduto.dto';
-import { ProductDetails } from './complementoProduto.dto';
+import { ProductImage } from './product_image.dto';
+import { ProductDetails } from './product_complement.dto';
 import { Type } from 'class-transformer';
 
 export class CreateProduct {

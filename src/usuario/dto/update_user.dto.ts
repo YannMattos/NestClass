@@ -7,7 +7,7 @@ import {
 } from 'class-validator';
 import { EmailValidation } from '../validacao/user_validation.validator';
 
-export class AtualizaUsuario {
+export class UpdateUser {
   @IsString()
   @MinLength(3)
   @IsOptional()
