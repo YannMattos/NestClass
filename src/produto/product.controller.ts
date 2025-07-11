@@ -1,76 +1,70 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
-import { CreateProduct } from "./dto/create_product.dto";
-import { ProductEntity } from "./entities/product.entity";
-import { ProductRepository } from "./product.repository";
-import { listProducts } from "./dto/product_list.dto";
-import { UpdateProduct } from "./dto/update_product.dto";
-
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
+import { CreateProduct } from './dto/create_product.dto';
+import { ProductRepository } from './product.repository';
+import { UpdateProduct } from './dto/update_product.dto';
+import { ProductService } from './product.service';
 
 @Controller('produtos')
 export class ProductsController {
+  constructor(
+    private productRepository: ProductRepository,
+    private productService: ProductService,
+  ) {}
 
-    constructor (
-        private productRepository : ProductRepository
-    ){}
+  @Post()
+  async createProduct(@Body() productsData: CreateProduct) {
+    const product = await this.productService.createProduct(productsData);
 
-    @Post()
-    async createProduct (@Body() productsData: CreateProduct){
+    return {
+      produto: product,
+      message: 'Produto criado com sucesso! ',
+    };
+  }
 
-        const newProduct = new ProductEntity();
-        newProduct.name = productsData.name;
-        newProduct.details = productsData.details;
-        newProduct.quantity = productsData.quantity;
-        newProduct.price = productsData.price;
-        newProduct.image = productsData.image;
+  @Get()
+  async productsList() {
+    const products = await this.productService.listProducts();
 
-        this.productRepository.create(newProduct)
-        return{
-            produto: productsData,
-            message: "Produto criado com sucesso! "
-        }
-    }
+    return products;
+  }
 
-    @Get()
-    async productsList () {
-        const products = await this.productRepository.list();
+  @Get('/:id')
+  async listProduct(@Param('id') id: string) {
+    const product = await this.productRepository.listProduct(id);
 
-        const productsList = products.map(productItem => {
-            const productInsp = new listProducts();
-            productInsp.name = productItem.name;
-            return productInsp;
-        });
+    return product;
+  }
 
-        return productsList;
-    }
+  @Put('/:id')
+  async updateProduct(
+    @Param('id') id: string,
+    @Body() newProductData: UpdateProduct,
+  ) {
+    const updateProduct = await this.productService.updateProduct(
+      id,
+      newProductData,
+    );
 
-    @Get('/:id')
-    async listProduct(@Param('id') id: string){
-        const product = await this.productRepository.listProduct(id)
+    return {
+      product: updateProduct,
+      message: 'Produto atualizado com sucesso',
+    };
+  }
 
-        return product
-    }
+  @Delete('/:id')
+  async deleteProduct(@Param('id') id: string) {
+    await this.productService.deleteProduct(id);
 
-
-    @Put('/:id')
-    async updateProduct(@Param('id') id: string, @Body() newProductData: UpdateProduct){
-        const updateProduct = await this.productRepository.update(
-            id,
-            newProductData
-        )
-
-        return{
-            product: updateProduct,
-            message: "Produto atualizado com sucesso"
-        }
-    }
-
-    @Delete('/:id')
-        async deleteProduct (@Param('id') id: string){
-            await this.productRepository.delete(id);
-
-            return{
-                message: "Produto deletado com sucesso"
-            }
-        }
-    
+    return {
+      message: 'Produto deletado com sucesso',
+    };
+  }
 }

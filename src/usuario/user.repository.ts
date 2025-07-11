@@ -14,7 +14,7 @@ export class UserRepository {
       throw new Error('Usuario não existe');
     }
 
-    return verificaUsuario
+    return verificaUsuario;
   }
 
   async salvar(usuario: UserEntity) {
@@ -34,7 +34,7 @@ export class UserRepository {
   }
 
   async atualiza(id: string, dadosAtualizados: Partial<UserEntity>) {
-    const usuario = this.buscaPorId(id)
+    const usuario = this.buscaPorId(id);
 
     Object.entries(dadosAtualizados).forEach(([chave, valor]) => {
       if (chave === 'id') {
@@ -50,9 +50,9 @@ export class UserRepository {
     const usuario = this.buscaPorId(id);
 
     this.usuarios = this.usuarios.filter(
-        usuarioSalvo => usuarioSalvo.id !== id
-    )
+      (usuarioSalvo) => usuarioSalvo.id !== id,
+    );
 
-    return usuario
+    return usuario;
   }
 }

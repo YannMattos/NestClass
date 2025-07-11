@@ -1,4 +1,11 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  DeleteDateColumn,
+} from 'typeorm';
 import { ProductDetails } from '../dto/product_complement.dto';
 import { ProductImage } from '../dto/product_image.dto';
 
@@ -8,7 +15,7 @@ export class ProductEntity {
   id: string;
 
   @Column({ name: 'user_id', nullable: false })
-  user_id: number;
+  user_id: string;
 
   @Column({ name: 'product_name', length: 150, nullable: false })
   name: string;

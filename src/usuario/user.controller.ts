@@ -1,62 +1,53 @@
-import { Controller, Post, Body, Get, Put, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Get,
+  Put,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { CreateUser } from './dto/create_users.dto';
-import { UserEntity } from './entity/user.entity';
-import {v4 as uuid} from "uuid"
 import { UpdateUser } from './dto/update_user.dto';
 import { UserService } from './user.service';
 
 @Controller('usuarios')
 export class UserController {
-   
-  constructor(
-    private userService: UserService
-  ) {}
+  constructor(private userService: UserService) {}
 
   @Post()
   async createUser(@Body() userData: CreateUser) {
-    
-    const userEntity = new UserEntity();
-    userEntity.email = userData.email;
-    userEntity.name = userData.name;
-    userEntity.password = userData.password;
-    userEntity.id = uuid()
-
-    this.userService.createUser(userEntity)
+    this.userService.createUser(userData);
     return {
-      id: userEntity.id,
-      message: "Usuario criado com sucesso"
+      email: userData.email,
+      message: 'Usuario criado com sucesso',
     };
   }
 
-  @Get() 
+  @Get()
   async listUser() {
     const usersList = this.userService.listUsers();
 
-    return usersList
+    return usersList;
   }
 
-  @Put("/:id")
-  async updateUser(@Param('id') id: string, @Body() newUserData: UpdateUser){
-    const atualizaUsuario = await this.userService.updateUser(
-      id,
-      newUserData
-    )
+  @Put('/:id')
+  async updateUser(@Param('id') id: string, @Body() newUserData: UpdateUser) {
+    const atualizaUsuario = await this.userService.updateUser(id, newUserData);
 
-    return{
+    return {
       usuario: atualizaUsuario,
-      message: "Usuario atualizado com sucesso"
-    }
+      message: 'Usuario atualizado com sucesso',
+    };
   }
 
-  @Delete("/:id")
+  @Delete('/:id')
   async deleteUser(@Param('id') id: string) {
     const usuarioRemovido = await this.userService.deleteUser(id);
 
     return {
       usuario: usuarioRemovido,
-      message: "Usuario deletado com sucesso"
+      message: 'Usuario deletado com sucesso',
     };
   }
-
 }
- 

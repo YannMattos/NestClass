@@ -11,7 +11,6 @@ import { ProductDetails } from './product_complement.dto';
 import { Type } from 'class-transformer';
 
 export class CreateProduct {
-  id: number;
 
   @IsNotEmpty()
   user_id: string
@@ -37,6 +36,7 @@ export class CreateProduct {
 
   @IsNotEmpty()
   @ValidateNested()
+  @IsOptional()
   @Type(() => ProductImage)
   image: ProductImage;
 }

@@ -1,5 +1,5 @@
 import {
-    registerDecorator,
+  registerDecorator,
   ValidationArguments,
   ValidationOptions,
   ValidatorConstraint,
@@ -27,13 +27,13 @@ export class EmailValidator implements ValidatorConstraintInterface {
 }
 
 export const EmailValidation = (valitadionOptions: ValidationOptions) => {
-    return (objeto: Object, propriedade: string) =>{
-        registerDecorator({
-            target: objeto.constructor,
-            propertyName: propriedade,
-            options: valitadionOptions,
-            constraints: [],
-            validator: EmailValidator
-        })
-    }
-}
+  return (objeto: Object, propriedade: string) => {
+    registerDecorator({
+      target: objeto.constructor,
+      propertyName: propriedade,
+      options: valitadionOptions,
+      constraints: [],
+      validator: EmailValidator,
+    });
+  };
+};
