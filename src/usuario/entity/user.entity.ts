@@ -17,7 +17,7 @@ export class UserEntity {
     length: 100,
     nullable: false,
   })
-  nome: string;
+  name: string;
 
   @Column({
     name: 'email',
@@ -31,7 +31,7 @@ export class UserEntity {
     length: 100,
     nullable: false,
   })
-  senha: string;
+  password: string;
 
   @CreateDateColumn({ name: 'created_at' })
   created_at: string;

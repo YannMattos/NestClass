@@ -11,7 +11,7 @@ export class UpdateUser {
   @IsString()
   @MinLength(3)
   @IsOptional()
-  nome: string;
+  name: string;
 
   @IsEmail()
   @EmailValidation({ message: 'Email já cadastrado' })
@@ -27,5 +27,5 @@ export class UpdateUser {
     },
   )
   @IsOptional()
-  senha: string;
+  password: string;
 }

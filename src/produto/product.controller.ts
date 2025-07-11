@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
 import { CreateProduct } from "./dto/create_product.dto";
-import { ProductEntity } from "./entitys/product.entity";
+import { ProductEntity } from "./entities/product.entity";
 import { ProductRepository } from "./product.repository";
 import { listProducts } from "./dto/product_list.dto";
 import { UpdateProduct } from "./dto/update_product.dto";
